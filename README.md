@@ -36,4 +36,4 @@ export default InputContext;
     newUserInput=userInputCon;
 ```
 
-### More Questions? Book time @ [Queenscript Calendly](calendly.com/queenscript)
+### More Questions? Book time @ [Queenscript Calendly](https://www.calendly.com/queenscript)
