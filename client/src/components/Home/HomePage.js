@@ -1,11 +1,11 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { Button, Container, Row, Col, Nav, Tab, Sonnet } from "react-bootstrap";
 import PainLevel from '../PainLevel/PainLevel';
 import Duration from '../Duration/DurationPage';
 import HPI from '../HPI/HPIPage';
 import "./HomePage.css"
 import HPIPage from "../HPI/HPIPage";
-import { InputProvider } from '../InputContext'
+import InputContext from '../InputContext'
 
 
 const Home = (props) => {
@@ -138,7 +138,7 @@ const Home = (props) => {
   ]
     
     const [symptomInput, setSymptomInput] = useState();
-    const [qualityInput, setQualityInput] = useState();
+    const [qualityInput, setQualityInput] = useState("quality");
     const [radiationInput, setRadiationInput] = useState();
     const [assSympInput, setAssSympInput] = useState();
     const [pallativeInput, setPallativeInput] = useState();
@@ -146,12 +146,15 @@ const Home = (props) => {
     const [qunatityInput, setqunatityInput] = useState();
 
     function handleInput(e) {
-      setSymptomInput({
-        [e.target.name]: e.target.innerText
-      });
-      setQualityInput({
-        [e.target.name]: e.target.innerText
-      });
+      //CREATE CONDITION ON THE CLICK LISTENER TO PROPERLY SET THE STATE
+      if(e.target.name==="symptoms"){
+        setSymptomInput( e.target.innerText
+        )
+      }
+    
+      if(e.target.name==="Qualities"){
+        setQualityInput( e.target.innerText)
+      }
       setRadiationInput({
         [e.target.name]: e.target.innerText
       });
@@ -168,18 +171,27 @@ const Home = (props) => {
         [e.target.name]: e.target.innerText
       });
     }
-    const inputs = [
-      {symptoms: symptomInput},
-      {Qualities:qualityInput},
-      {Radiations:radiationInput},
-      {AssSymps:assSympInput},
-      {Pallatives:pallativeInput},
-      {Provocatives:provocativeInput},
-      {Quantities: qunatityInput}
-    ]
+    let inputs = {
+      symptoms: symptomInput,
+      Qualities:qualityInput,
+      Radiations:radiationInput,
+      AssSymps:assSympInput,
+      Pallatives:pallativeInput,
+      Provocatives:provocativeInput,
+      Quantities: qunatityInput
+    }
+    //SET THE INPUT OBJECT EQUAL TO THE USE CONTEXT OBJECT
+    let newUserInput, userInputCon;
+    newUserInput = useContext(InputContext)
+    userInputCon = inputs;
+    newUserInput=userInputCon;
+
   return (
     <>
-    <InputProvider value={inputs}>
+    {/* <InputProvider value={inputs}> */}
+    {console.log("SYMP", symptomInput)}
+    {console.log("INPUTS", inputs)}
+    {console.log("context works!", newUserInput)}
       <Container>
             <Tab.Container id="left-tabs-example" defaultActiveKey="first">
           <Row>
@@ -279,7 +291,7 @@ const Home = (props) => {
         </Tab.Container>
         
       </Container>
-    </InputProvider>
+    {/* </InputProvider> */}
     </>
   );
 };
